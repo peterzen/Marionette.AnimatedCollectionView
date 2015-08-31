@@ -32,7 +32,7 @@
       callback();
       return;
     }
-    
+
     this._buffer.push(callback);
     this.run();
   };
@@ -65,10 +65,10 @@
 
     return View.extend({
       initialize: function() {
-        this.listenTo(this, 'collection:rendered', function() {
+        this.listenTo(this, 'render:collection', function() {
           // bind before:item:added after the collection has been fully rendered,
           // otherwise the add animation would be triggered for everything
-          this.listenTo(this, 'before:item:added', this._animateAdd, this);
+          this.listenTo(this, 'before:add:child', this._animateAdd, this);
         }, this);
 
         this._animateSequence = new Sequence(o);
