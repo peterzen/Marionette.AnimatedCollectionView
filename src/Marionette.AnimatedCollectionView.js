@@ -68,7 +68,15 @@
         this.listenTo(this, 'render:collection', function() {
           // bind before:item:added after the collection has been fully rendered,
           // otherwise the add animation would be triggered for everything
-          this.listenTo(this, 'before:add:child', this._animateAdd, this);
+          this.listenTo(this, 'before:add:child', function(_view){
+            var view = _view;
+            this._animateAdd(_view)
+                .then(function(){
+                  // after the animation ended, remove the CSS class
+                  // from the element to avoid various artifacts occuring
+                  view.$el.removeClass(o.add);
+                })
+          }, this);
         }, this);
 
         this._animateSequence = new Sequence(o);
@@ -77,16 +85,19 @@
 
       removeChildView: function(view) {
         this._animateRemove(view)
-          .then(_removeChildView.bind(this, view));
+            .then(_removeChildView.bind(this, view));
       },
 
       _animateAdd: function(view) {
+        var promise = view.$el.animationEndPromise(o.promise);
         view.$el.addClass(o.add);
         view.$el.css('animation-play-state', 'paused');
 
         this._animateSequence.push(function() {
           view.$el.css('animation-play-state', '');
         });
+
+        return promise;
       },
 
       _animateRemove: function(view) {
