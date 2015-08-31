@@ -104,7 +104,7 @@
     });
   }
 
-  decorateAnimatedCollectionView.version = '0.1.5';
+  decorateAnimatedCollectionView.version = '0.1.6';
   decorateAnimatedCollectionView.defaults = {
     add: 'item-adding',
     remove: 'item-removing',
