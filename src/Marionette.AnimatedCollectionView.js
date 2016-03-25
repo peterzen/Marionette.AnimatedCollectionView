@@ -8,7 +8,7 @@
   // https://github.com/umdjs/umd/blob/master/returnExports.js
   if (typeof exports === 'object') {
     // Node
-    module.exports = factory(require('jquery', 'jQuery-transitionEndPromise'));
+    module.exports = factory(require('jquery'), require('jquery-transitioendpromise'));
   } else if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
     define(['jquery', 'jQuery-transitionEndPromise'], factory);
